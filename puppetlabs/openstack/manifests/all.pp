@@ -280,7 +280,7 @@ class openstack::all (
       }
     }
 
-  if $quantum == false {
+  if $quantum != true {
     # Configure nova-network
     class { 'nova::network':
       private_interface => $private_interface,
