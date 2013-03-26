@@ -52,6 +52,7 @@ class garrstack::usergroups {
     'garr-libvirtd':
       name    => 'libvirtd',
       gid     => 118,
+      members => ['nova'],
       ensure  => present;
   
     #nova:x:119:
