@@ -1,58 +1,69 @@
 class garrstack::usergroups {
-  #libvirt-qemu:x:111:117:Libvirt Qemu,,,:/var/lib/libvirt:/bin/false
-  user { 'libvirt-qemu':
-    uid     => 111,
-    gid     => 117,
-    comment => "Libvirt Qemu,,,",
-    home    => "/var/lib/libvirt",
-    shell   => "/bin/false",
-  }
+  user {
+    #libvirt-qemu:x:111:117:Libvirt Qemu,,,:/var/lib/libvirt:/bin/false
+    'garr-libvirt-qemu':
+      name    => 'libvirt-qemu',
+      uid     => 111,
+      gid     => 117,
+      comment => "Libvirt Qemu,,,",
+      home    => "/var/lib/libvirt",
+      shell   => "/bin/false",
+      ensure  => present;
+      
+    #libvirt-dnsmasq:x:112:118:Libvirt Dnsmasq,,,:/var/lib/libvirt/dnsmasq:/bin/false
+    'garr-libvirt-dnsmasq':
+      name    => 'libvirt-dnsmasq',
+      uid     => 112,
+      gid     => 118,
+      comment => "Libvirt Dnsmasq,,,",
+      home    => "/var/lib/libvirt/dnsmasq",
+      shell   => "/bin/false",
+      ensure  => present;
+
+    #nova:x:113:119::/var/lib/nova:/bin/false
+    'garr-nova':
+      name    => 'nova',
+      uid     => 113,
+      gid     => 119,
+      comment => "",
+      home    => "/var/lib/nova",
+      shell   => "/bin/false",
+      ensure  => present;
   
-  #libvirt-dnsmasq:x:112:118:Libvirt Dnsmasq,,,:/var/lib/libvirt/dnsmasq:/bin/false
-  user { 'libvirt-dnsmasq':
-    uid     => 112,
-    gid     => 118,
-    comment => "Libvirt Dnsmasq,,,",
-    home    => "/var/lib/libvirt/dnsmasq",
-    shell   => "/bin/false",
+    #cinder:x:114:120::/var/lib/cinder:/bin/false
+    'garr-cinder':
+      name    => 'cinder',
+      uid     => 114,
+      gid     => 120,
+      comment => "",
+      home    => "/var/lib/cinder",
+      shell   => "/bin/false",
+      ensure  => present;
   }
 
-  #nova:x:113:119::/var/lib/nova:/bin/false
-  user { 'nova':
-    uid     => 113,
-    gid     => 119,
-    comment => "",
-    home    => "/var/lib/nova",
-    shell   => "/bin/false",
-  }
-  
-  #cinder:x:114:120::/var/lib/cinder:/bin/false
-  user { 'cinder':
-    uid     => 114,
-    gid     => 120,
-    comment => "",
-    home    => "/var/lib/cinder",
-    shell   => "/bin/false",
-  }
-
-  #da aggiungere in /etc/group
-  #kvm:x:117:
-	group { 'kvm':
-	 gid     => 117,
-	}
+	group {
+	  #kvm:x:117:
+	  'garr-kvm':
+	    name    => 'kvm',
+	    gid     => 117,
+	    ensure  => present;
 	
-  #libvirtd:x:118:nova
-  group { 'libvirtd':
-   gid     => 118,
-  }
+    #libvirtd:x:118:nova
+    'garr-libvirtd':
+      name    => 'libvirtd',
+      gid     => 118,
+      ensure  => present;
   
-  #nova:x:119:
-  group { 'nova':
-   gid     => 119,
-  }
-  
-  #cinder:x:120:
-  group { 'cinder':
-   gid     => 120,
+    #nova:x:119:
+    'garr-nova':
+      name    => 'nova',
+      gid     => 119,
+      ensure  => present;
+   
+    #cinder:x:120:
+    'garr-cinder':
+      name    => 'cinder',
+      gid     => 120,
+      ensure  => present;
   }
 }

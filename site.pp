@@ -43,7 +43,7 @@ node 'idp-openstack' {
     auto_assign_floating_ip     => $auto_assign_floating_ip,
     password                    => $password,
     admin_email                 => $admin_email,
-    keystome_admin_token        => $keystone_admin_token,
+    keystone_admin_token        => $keystone_admin_token,
     rabbit_user                 => $rabbit_user,
     horizon_secret_key          => $horizon_secret_key,
     # parameters added for all installation instead of controller
