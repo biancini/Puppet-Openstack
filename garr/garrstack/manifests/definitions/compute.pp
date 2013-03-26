@@ -13,7 +13,7 @@ define garrstack::compute(
   $cinder_sql_connection = undef,
 ) {
 
-  stage { 'first': } -> Stage['main'] -> stage { 'last': }
+  stage { 'first': } -> Stage['main']
 
   class {
     'openstack::repository':
@@ -49,7 +49,7 @@ define garrstack::compute(
 
   
   class { 'garrstack::configs':
-    stage => last;
+    require => Class['openstack::compute']
   }
 
 }

@@ -16,7 +16,7 @@ define garrstack::all(
   $libvirt_type = undef,
 ) {
 
-  stage { 'first': } -> Stage['main'] -> stage { 'last': }
+  stage { 'first': } -> Stage['main']
 
   class {
     'openstack::repository':
@@ -72,7 +72,7 @@ define garrstack::all(
   }
   
   class { 'garrstack::configs':
-    stage => last;
+    require => Class['openstack::compute']
   }
 
 }

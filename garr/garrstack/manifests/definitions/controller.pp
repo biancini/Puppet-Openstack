@@ -15,8 +15,8 @@ define garrstack::controller(
   $horizon_secret_key = undef,
 ) {
 
-  stage { 'first': } -> Stage['main'] -> stage { 'last': }
-
+  stage { 'first': } -> Stage['main']
+  
   class {
     'openstack::repository':
       stage => first;
@@ -72,7 +72,7 @@ define garrstack::controller(
   }
   
   class { 'garrstack::configs':
-    stage => last;
+    require => Class['openstack::compute']
   }
 
 }
