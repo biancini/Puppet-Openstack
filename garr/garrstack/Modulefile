@@ -1,0 +1,11 @@
+name 'garr-garrstack'
+version '0.1'
+
+author 'GARR'
+license 'GPLv3'
+project_page ''
+source ''
+summary 'A module to install Openstack for GARR platform'
+description ''
+dependency 'puppetlabs/openstack', '>=1.0.3'
+dependency 'puppetlabs/nova', '>=1.0.1'

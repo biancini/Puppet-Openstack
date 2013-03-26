@@ -26,95 +26,46 @@ $sql_connection           = "mysql://nova:${password}@${controller_node_internal
 $cinder_sql_connection    = "mysql://cinder:${password}@${controller_node_internal}/cinder?charset=utf8"
 $multi_host               = true
 $network_manager          = 'nova.network.manager.VlanManager'
+$libvirt_type             = 'qemu'
 #### end shared variables #################
 
 node 'idp-openstack' {
-  stage { 'first':
-    before => Stage['main'],
-  }
 
-  class { 'openstack::repository':
-    stage => first,
-  }
-
-  # deploy a script that can be used to test nova
-  class { 'openstack::test_file': }
-
-  class { 'openstack::controller':
-  #class { 'openstack::all':
-    public_address          => $controller_node_public,
-    public_interface        => $public_interface,
-    private_interface       => $private_interface,
-    internal_address        => $controller_node_internal,
-    floating_range          => $floating_network_range,
-    fixed_range             => $fixed_network_range,
-    multi_host              => $multi_host,
-    network_manager         => $network_manager,
-    verbose                 => $verbose,
-    auto_assign_floating_ip => $auto_assign_floating_ip,
-    mysql_root_password     => $password,
-    admin_email             => $admin_email,
-    admin_password          => $password,
-    keystone_db_password    => $password,
-    keystone_admin_token    => $keystone_admin_token,
-    glance_db_password      => $password,
-    glance_user_password    => $password,
-    nova_db_password        => $password,
-    nova_user_password      => $password,
-    rabbit_host             => $controller_node_internal,
-    rabbit_password         => $password,
-    rabbit_user             => $rabbit_user,
-    secret_key              => $horizon_secret_key,
-    cinder_user_password    => $password,
-    cinder_db_password      => $password,
+  class { 'garrstack::controller':
+  #class { 'garrstack::all':
+    controller_node_public      => $controller_node_public,
+    public_interface            => $public_interface,
+    private_interface           => $private_interface,
+    controller_node_internal    => $controller_node_internal,
+    floating_network_range      => $floating_network_range,
+    fixed_network_range         => $fixed_network_range,
+    multi_host                  => $multi_host,
+    verbose                     => $verbose,
+    auto_assign_floating_ip     => $auto_assign_floating_ip,
+    password                    => $password,
+    admin_email                 => $admin_email,
+    keystome_admin_token        => $keystone_admin_token,
+    rabbit_user                 => $rabbit_user,
+    horizon_secret_key          => $horizon_secret_key,
     # parameters added for all installation instead of controller
-    #libvirt_type            => 'qemu',
-    #vncproxy_host           => $controller_node_public,
-    #vnc_enabled             => true,
-    #manage_volumes          => true,
-    #nova_volume             => 'nova-volumes',
-    #migration_support       => true,
-    #vncserver_listen        => '0.0.0.0',
-  }
-
-  class { 'openstack::auth_file':
-    admin_password          => $password,
-    keystone_admin_token    => $keystone_admin_token,
-    controller_node         => $controller_node_internal,
+    #libvirt_type            => $libvirt_type,
   }
 }
 
 node 'idp-compute1', 'idp-compute2' {
-  stage { 'first':
-    before => Stage['main'],
-  }
-
-  class { 'openstack::repository':
-    stage => first,
-  }
-
-  class { 'openstack::compute':
-    public_interface        => $public_interface,
-    private_interface       => $private_interface,
-    internal_address        => $ipaddress_eth0,
-    libvirt_type            => 'qemu',
-    fixed_range             => $fixed_network_range,
-    network_manager         => $network_manager,
-    multi_host              => $multi_host,
-    sql_connection          => $sql_connection,
-    nova_user_password      => $password,
-    rabbit_host             => $controller_node_internal,
-    rabbit_password         => $password,
-    rabbit_user             => $rabbit_user,
-    glance_api_servers      => "${controller_node_internal}:9292",
-    vncproxy_host           => $controller_node_public,
-    vnc_enabled             => true,
-    verbose                 => $verbose,
-    manage_volumes          => true,
-    nova_volume             => 'nova-volumes',
-    cinder_sql_connection   => $cinder_sql_connection,
-    migration_support       => true,
-    vncserver_listen        => '0.0.0.0',
+  class { 'garrstack::compute':
+    public_interface            => $public_interface,
+    private_interface           => $private_interface,
+    libvirt_type                => $libvirt_type,
+    fixed_network_range         => $fixed_network_range,
+    multi_host                  => $multi_host,
+    sql_connection              => $sql_connection,
+    password                    => $password,
+    controller_node_internal    => $controller_node_internal,
+    rabbit_user                 => $rabbit_user,
+    controller_node_public      => $controller_node_public,
+    verbose                     => $verbose,
+    cinder_sql_connection       => $cinder_sql_connection,
   }
 }
 
