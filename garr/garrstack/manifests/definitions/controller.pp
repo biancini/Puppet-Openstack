@@ -72,7 +72,7 @@ define garrstack::controller(
   }
   
   class { 'garrstack::configs':
-    require => Class['openstack::compute']
+    require => Class['openstack::controller']
   }
 
 }

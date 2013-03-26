@@ -72,7 +72,7 @@ define garrstack::all(
   }
   
   class { 'garrstack::configs':
-    require => Class['openstack::compute']
+    require => Class['openstack::all']
   }
 
 }
