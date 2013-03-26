@@ -30,9 +30,8 @@ $libvirt_type             = 'qemu'
 #### end shared variables #################
 
 node 'idp-openstack' {
-
-  class { 'garrstack::controller':
-  #class { 'garrstack::all':
+  garrstack::controller { "${hostname}":
+  #garrstack::all { "${hostname}":
     controller_node_public      => $controller_node_public,
     public_interface            => $public_interface,
     private_interface           => $private_interface,
@@ -53,7 +52,7 @@ node 'idp-openstack' {
 }
 
 node 'idp-compute1', 'idp-compute2' {
-  class { 'garrstack::compute':
+  garrstack::compute { "${hostname}":
     public_interface            => $public_interface,
     private_interface           => $private_interface,
     libvirt_type                => $libvirt_type,
