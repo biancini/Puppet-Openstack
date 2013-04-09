@@ -47,9 +47,16 @@ define garrstack::compute(
     vncserver_listen        => '0.0.0.0',
   }
 
-  
   class { 'garrstack::configs':
-    require => Class['openstack::compute']
+    require => Class['openstack::compute'],
+    notify => Exec['start-scsi'],
+  }
+  
+  exec { 'start-scsi':
+    command     => 'service open-iscsi restart',
+    path        => ['/usr/bin', '/usr/sbin'],
+    user        => 'root',
+    refreshonly => true,
   }
 
 }

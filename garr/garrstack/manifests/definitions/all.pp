@@ -63,6 +63,7 @@ define garrstack::all(
     nova_volume             => 'nova-volumes',
     migration_support       => true,
     vncserver_listen        => '0.0.0.0',
+    quantum                 => false,
   }
   
   class { 'openstack::auth_file':

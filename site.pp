@@ -30,8 +30,8 @@ $libvirt_type             = 'qemu'
 #### end shared variables #################
 
 node 'idp-openstack' {
-  garrstack::controller { "${hostname}":
-  #garrstack::all { "${hostname}":
+  #garrstack::controller { "${hostname}":
+  garrstack::all { "${hostname}":
     controller_node_public      => $controller_node_public,
     public_interface            => $public_interface,
     private_interface           => $private_interface,
@@ -47,7 +47,7 @@ node 'idp-openstack' {
     rabbit_user                 => $rabbit_user,
     horizon_secret_key          => $horizon_secret_key,
     # parameters added for all installation instead of controller
-    #libvirt_type            => $libvirt_type,
+    libvirt_type                => $libvirt_type,
   }
 }
 

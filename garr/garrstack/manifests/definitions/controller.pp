@@ -29,7 +29,6 @@ define garrstack::controller(
   class { 'openstack::test_file': }
 
   class { 'openstack::controller':
-  #class { 'openstack::all':
     public_address          => $controller_node_public,
     public_interface        => $public_interface,
     private_interface       => $private_interface,
@@ -55,14 +54,7 @@ define garrstack::controller(
     secret_key              => $horizon_secret_key,
     cinder_user_password    => $password,
     cinder_db_password      => $password,
-    # parameters added for all installation instead of controller
-    #libvirt_type            => 'qemu',
-    #vncproxy_host           => $controller_node_public,
-    #vnc_enabled             => true,
-    #manage_volumes          => true,
-    #nova_volume             => 'nova-volumes',
-    #migration_support       => true,
-    #vncserver_listen        => '0.0.0.0',
+    quantum	            => false,
   }
   
   class { 'openstack::auth_file':
