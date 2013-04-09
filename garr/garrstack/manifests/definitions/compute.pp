@@ -47,9 +47,13 @@ define garrstack::compute(
     vncserver_listen        => '0.0.0.0',
   }
 
-  
   class { 'garrstack::configs':
-    require => Class['openstack::compute']
+    require => Class['openstack::compute'],
+  }
+  
+  service { 'open-iscsi':
+      ensure => running,
+      require => Class['garrstack::configs'],
   }
 
 }

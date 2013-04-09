@@ -17,7 +17,7 @@ class garrstack::usergroups {
 
     'cinder-usr':
       path => '/etc/passwd',
-      line => "cinder:x:114:120::/var/lib/cinder:/bin/false",
+      line => "cinder:x:114:120::/var/lib/cinder:/bin/sh",
       match => 'cinder'; 
   }
   
@@ -34,12 +34,12 @@ class garrstack::usergroups {
 	
 	  'nova-grp':
       path => '/etc/group',
-      line => "nova:x:119:",
+      line => "nova:x:119:cinder",
       match => 'nova';
   
     'cinder-grp':
       path => '/etc/group',
-      line => "cinder:x:120:",
+      line => "cinder:x:120:nova",
       match => 'cinder';
   }
 }
