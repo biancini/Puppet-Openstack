@@ -49,14 +49,11 @@ define garrstack::compute(
 
   class { 'garrstack::configs':
     require => Class['openstack::compute'],
-    notify => Exec['start-scsi'],
   }
   
-  exec { 'start-scsi':
-    command     => 'service open-iscsi restart',
-    path        => ['/usr/bin', '/usr/sbin'],
-    user        => 'root',
-    refreshonly => true,
+  service { 'open-iscsi':
+      ensure => running,
+      require => Class['garrstack::configs'],
   }
 
 }
