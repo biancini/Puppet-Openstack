@@ -30,6 +30,11 @@ $libvirt_type             = 'qemu'
 #### end shared variables #################
 
 node 'idp-openstack' {
+  filebucket { "main":
+    server => "puppet.mib.garr.it",
+    path   => false,
+  }
+
   #garrstack::controller { "${hostname}":
   garrstack::all { "${hostname}":
     controller_node_public      => $controller_node_public,
@@ -52,6 +57,11 @@ node 'idp-openstack' {
 }
 
 node 'idp-compute1', 'idp-compute2' {
+  filebucket { "main":
+    server => "puppet.mib.garr.it",
+    path   => false,
+  }
+
   garrstack::compute { "${hostname}":
     public_interface            => $public_interface,
     private_interface           => $private_interface,
