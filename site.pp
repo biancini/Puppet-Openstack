@@ -30,6 +30,8 @@ $libvirt_type             = 'qemu'
 #### end shared variables #################
 
 node 'idp-openstack' {
+  File { backup => "main" }
+
   filebucket { "main":
     server => "puppet.mib.garr.it",
     path   => false,
@@ -57,6 +59,8 @@ node 'idp-openstack' {
 }
 
 node 'idp-compute1', 'idp-compute2' {
+  File { backup => "main" }
+
   filebucket { "main":
     server => "puppet.mib.garr.it",
     path   => false,
