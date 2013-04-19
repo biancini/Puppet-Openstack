@@ -59,6 +59,14 @@ define garrstack::controller(
     quantum	            => false,
   }
   
+  if ($openstack_version == 'grizzly') {
+    Class['openstack::all'] -> Package['nova-conductor']
+     
+    package { 'nova-conductor':
+      ensure => present
+    }
+  }
+  
   class { 'openstack::auth_file':
     admin_password          => $password,
     keystone_admin_token    => $keystone_admin_token,
