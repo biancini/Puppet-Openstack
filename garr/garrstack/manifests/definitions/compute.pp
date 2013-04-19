@@ -11,12 +11,14 @@ define garrstack::compute(
   $controller_node_public = undef,
   $verbose = undef,
   $cinder_sql_connection = undef,
+  $openstack_version = undef,
 ) {
 
   stage { 'first': } -> Stage['main']
 
   class {
-    'openstack::repository':
+    'garrstack::repository':
+      openstack_version => $openstack_version,
       stage => first;
  
     'garrstack::usergroups':

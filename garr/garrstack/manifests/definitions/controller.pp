@@ -13,12 +13,14 @@ define garrstack::controller(
   $keystone_admin_token = undef,
   $rabbit_user = undef,
   $horizon_secret_key = undef,
+  $openstack_version = undef,
 ) {
 
   stage { 'first': } -> Stage['main']
   
   class {
-    'openstack::repository':
+    'garrstack::repository':
+      openstack_version => $openstack_version,
       stage => first;
  
     'garrstack::usergroups':

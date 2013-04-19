@@ -14,12 +14,14 @@ define garrstack::all(
   $rabbit_user = undef,
   $horizon_secret_key = undef,
   $libvirt_type = undef,
+  $openstack_version = undef,
 ) {
 
   stage { 'first': } -> Stage['main']
 
   class {
-    'openstack::repository':
+    'garrstack::repository':
+      openstack_version => $openstack_version,
       stage => first;
  
     'garrstack::usergroups':

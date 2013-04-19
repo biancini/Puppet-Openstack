@@ -3,6 +3,7 @@
 ###################################################
 
 ####### shared variables ##################
+$openstack_version      = 'grizzly'
 $password               = 'ciaoStack'
 # assumes that eth0 is the public interface
 $public_interface        = 'eth0'
@@ -53,6 +54,7 @@ node 'idp-openstack' {
     keystone_admin_token        => $keystone_admin_token,
     rabbit_user                 => $rabbit_user,
     horizon_secret_key          => $horizon_secret_key,
+    openstack_version           => $openstack_version,
     # parameters added for all installation instead of controller
     libvirt_type                => $libvirt_type,
   }
@@ -79,6 +81,7 @@ node 'idp-compute1', 'idp-compute2' {
     controller_node_public      => $controller_node_public,
     verbose                     => $verbose,
     cinder_sql_connection       => $cinder_sql_connection,
+    openstack_version           => $openstack_version,
   }
 }
 
